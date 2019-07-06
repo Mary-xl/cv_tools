@@ -89,7 +89,7 @@ def main():
            print(">>>>>crop image<<<<<")
            cropped_img=image_crop(img)
 
-        if shift==True:
+        elif shift==True:
            print (">>>>>shift colours for RGB image<<<<<")
            s=int(input("please input a shift value in range [0,255]:"))
            shift_img=shift_color(img, s)
