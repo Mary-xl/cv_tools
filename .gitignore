@@ -1,5 +1,7 @@
 
 
 # User-specific stuff
-./idea*
+.idea*
+*.xml
+__pycache__/
 

@@ -10,6 +10,7 @@ Created on 05 July 2019
 from docopt import docopt
 import cv2
 from config_pipeline import config
+from opencv_basics.crop import image_crop
 from opencv_basics.colour_shift import shift_color
 from opencv_basics.adjust_gamma import gamma_correction
 from opencv_basics.transform import transform_img
@@ -20,7 +21,7 @@ CLI_OPTS = """
 Usage:
      run_pipeline.py <dataFile>
                      (--local | --server)
-                     [--basic (--shift | --gamma | --transform |--hist_equa)]
+                     [--basic (--crop | --shift | --gamma | --transform |--hist_equa)]
                      
 
 
@@ -28,6 +29,7 @@ Options:
      --local                          Run on local processing environment
      --server                         Run on server
      --basic                          basic image processing using OpenCV
+     --crop                           crop image 
      --shift                          shift intensities in all 3 channels                    
      --gamma                          perform gamma correction                     
      --transform                      perform image transformation, including similarity, affine and perspective transformations                       
@@ -39,6 +41,7 @@ opts = docopt(CLI_OPTS)
 # Default values
 RunMode = 'local'
 basic = False
+crop = False
 shift = False
 gamma = False
 resize = False
@@ -59,6 +62,8 @@ if opts['--server']:
     RunMode = 'server'
 if opts['--basic']:
     basic = True
+if opts['--crop']:
+    crop = True
 if opts['--shift']:
     shift = True
 if opts['--gamma']:
@@ -80,6 +85,9 @@ def main():
         img_dim = img.shape
         img_center = (w // 2, h // 2)
 
+        if crop==True:
+           print(">>>>>crop image<<<<<")
+           cropped_img=image_crop(img)
 
         if shift==True:
            print (">>>>>shift colours for RGB image<<<<<")
@@ -93,11 +101,11 @@ def main():
 
         elif transform==True:
             print (">>>>>perform transform<<<<<")
-            transform_img(img,img_center,img_dim)
+            transformed_img=transform_img(img,img_center,img_dim)
 
         elif hist_equa==True:
             print (">>>>>perform histogram equalization<<<<<")
-            histogram_equalization(img)
+            equal_img=histogram_equalization(img)
 
 
 if __name__ == '__main__':

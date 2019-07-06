@@ -16,3 +16,4 @@ def histogram_equalization(image):
     key=cv2.waitKey(0)
     if key==27:
         cv2.destroyAllWindows()
+    return new_image

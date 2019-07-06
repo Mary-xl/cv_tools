@@ -117,3 +117,4 @@ def transform_img(img,center,img_dim):
     key = cv2.waitKey(0)
     if key == 27:
         cv2.destroyAllWindows()
+    return  new_image
