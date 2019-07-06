@@ -9,7 +9,10 @@ It is also used as an practice for a Deep Learning training course.
 
 2. How to run:
    (1) Basic image processing:
-       python run_pipeline "path/to/imageFile" --local --basic "--your option"
+       Usage:
+       run_pipeline.py <dataFile>
+                     (--local | --server)
+                     [--basic (--crop | --shift | --gamma | --transform |--hist_equa)]
        e.g.
        python run_pipeline.py  /home/mary/AI_Computing/CV_DL/data/Lenna.png --local --basic --gamma
       
