@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 import random
+import matplotlib.pyplot as plt
 
 
 def similarity_transform(image, center, dim, angle=0.0, scale=1.0, clip=True):
@@ -81,6 +82,11 @@ def transform_img(img,center,img_dim):
         cv2.imshow("original", img)
         cv2.imshow("affine transform", new_image)
 
+        #using matrix transformation to verify
+        new_matrix = dotProduct(img, pts1, pts2, type)
+
+
+
     if type==2:
         option=input ("please provide 4 pairs of corresponding points, using default values as example input 0: ")
         if int(option)==0:
@@ -113,8 +119,49 @@ def transform_img(img,center,img_dim):
         cv2.imshow("original", img)
         cv2.imshow("perspective transform", new_image)
 
+        #using matrix transformation to verify
+        new_matrix = dotProduct(img, pts1, pts2, type)
 
     key = cv2.waitKey(0)
     if key == 27:
         cv2.destroyAllWindows()
     return  new_image
+
+def quit_figure(event):
+    if event.key == 'q':
+        plt.close(event.canvas.figure)
+
+def dotProduct(img, pts1, pts2, type):
+
+        if type==1:
+           M = cv2.getAffineTransform(pts1, pts2)
+           one = np.ones((3, 1))
+        if type==2:
+           M = cv2.getPerspectiveTransform(pts1, pts2)
+           one = np.ones((4, 1))
+        pts1_add = np.append(pts1,one,axis=1)
+        #transform_pts1=np.transpose(np.dot(M,np.transpose(pts1_add)))
+        transform_pts1 = np.dot(pts1_add,np.transpose(M))
+        if transform_pts1.all()==pts2.all():
+            print ("M matrix confirmed")
+
+        for idx, point in enumerate (pts1):
+            xi_0,yi_0=point
+            xi_1,yi_1=pts1[(idx+1)%len(pts1)]
+            plt.plot([xi_0,xi_1],[yi_0,yi_1], color='yellow')
+
+        for idx, point in enumerate (pts2):
+            xi_0,yi_0=point
+            xi_1,yi_1=pts2[(idx+1)%len(pts2)]
+            plt.plot([xi_0,xi_1],[yi_0,yi_1],color='green')
+
+        ax = plt.gca()  # get the current axis
+        ax.xaxis.set_ticks_position('top')  # put x axis to the top
+        ax.invert_yaxis() # invert y axis to the opposite direction so as be consistent as image coordinate system
+        plt.show()
+        cid = plt.gcf().canvas.mpl_connect('key_press_event', quit_figure)
+
+
+
+
+
