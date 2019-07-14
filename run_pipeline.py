@@ -9,19 +9,21 @@ Created on 05 July 2019
 
 from docopt import docopt
 import cv2
+import os
+import numpy as np
 from config_pipeline import config
 from opencv_basics.crop import image_crop
 from opencv_basics.colour_shift import shift_color
 from opencv_basics.adjust_gamma import gamma_correction
 from opencv_basics.transform import transform_img
 from opencv_basics.histogram_equalization import histogram_equalization
-
+from opencv_basics.MedianFilter import  median_filter
 
 CLI_OPTS = """
 Usage:
      run_pipeline.py <dataFile>
                      (--local | --server)
-                     [--basic (--crop | --shift | --gamma | --transform |--hist_equa)]
+                     [--basic (--crop | --shift | --gamma | --transform |--hist_equa |--filter)]
                      
 
 
@@ -47,7 +49,7 @@ gamma = False
 resize = False
 hist_equa=False
 transform = False
-
+filter = False
 
 
 try:
@@ -72,7 +74,8 @@ if opts['--hist_equa']:
     hist_equa = True
 if opts['--transform']:
     transform = True
-
+if opts['--filter']:
+    filter = True
 
 def main():
 
@@ -80,6 +83,8 @@ def main():
 
     if basic==True:
         img = cv2.imread(c.dataFile)
+        dataFolder = os.path.dirname(c.dataFile)
+
         dtype = img.dtype
         (w, h, d) = img.shape
         img_dim = img.shape
@@ -106,6 +111,16 @@ def main():
         elif hist_equa==True:
             print (">>>>>perform histogram equalization<<<<<")
             equal_img=histogram_equalization(img)
+
+        elif filter==True:
+            filterType=input(">>>>>please choose filter type: 0 for median filter; ..<<<<<")
+
+            if int(filterType)==0:
+               kernelW = int(input("please provide kernel width: "))
+               kernelH = int(input("please provide kernel height: "))
+               kernel=np.ones((kernelH,kernelW))
+               padtype=int(input("please specify padding type: 0 for 0 padding; 1 for replica padding."))
+               median_filter(img,kernel, padtype, dataFolder)
 
 
 if __name__ == '__main__':
