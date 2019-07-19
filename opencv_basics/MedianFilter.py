@@ -1,4 +1,7 @@
 
+# author: Mary Li
+# date: July 2019
+
 import cv2
 import numpy as np
 import os
