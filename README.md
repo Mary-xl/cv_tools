@@ -1,6 +1,5 @@
 # cv_tools
-This project is built as a toolset for computer vision studies. It includes basic image processing operations (based on OpenCV) and will be extended in the future.
-It is also used as an practice for a Deep Learning training course.
+This project is built as a toolset for computer vision studies. It includes basic image processing operations (based on OpenCV) and basic Deep Learning tasks.
 
 1. Dependences:
    
