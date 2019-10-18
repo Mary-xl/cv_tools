@@ -13,6 +13,7 @@ def gradient_function(X,y,theta,m):
     hx=sigmoid(z)
     diff=hx-y
     gradient=1./m*np.dot(np.transpose(X),diff)
+
     return gradient
 
 def loss_function(X,y,theta,m):
