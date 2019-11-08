@@ -19,7 +19,7 @@ def gradient_function(X,y,theta,m):
 def loss_function(X,y,theta,m):
     z = np.dot(X, theta)
     hx=sigmoid(z)
-    J=-(-y*np.log(hx)+(1-y)*np.log(1-hx)).mean()
+    J=-(y*np.log(hx)+(1-y)*np.log(1-hx)).mean()
     return J
 
 def gradient_descent(X,y,theta,lr,m):

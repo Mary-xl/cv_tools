@@ -1,17 +1,14 @@
 # cv_tools
-This project is built as a toolset for computer vision studies. It includes basic image processing operations (based on OpenCV) and basic Deep Learning tasks.
-
-1. Dependences:
+This project is built as a toolset for computer vision studies. It includes basic image processing operations and basic machine learning tasks.
+(1) image processing and augmentation: adjust gamma, colour shift, crop, historgam equalization, median filter, image transform etc.
+(2) image stitching: feature detection and image matching (SIFT), homography, RANSAC
+(3) machine learning: linear regression, logistic regression, basic neural network, basic classifier
+ 
+Dependences:
    
    OpenCV (v3 and above)
    Python (v3 and above), numpy, matplotlib, docopt..
+   Pytorch 
 
-2. How to run:
-   (1) Basic image processing:
-       Usage:
-       run_pipeline.py <dataFile>
-                     (--local | --server)
-                     [--basic (--crop | --shift | --gamma | --transform |--hist_equa)]
-       e.g.
-       python run_pipeline.py  /home/mary/AI_Computing/CV_DL/data/Lenna.png --local --basic --gamma
+
       
